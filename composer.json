@@ -1,0 +1,33 @@
+{
+    "name": "marshal/application",
+    "description": "Bootstrap a Marshal application",
+    "type": "library",
+    "license": "AGPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Marshal\\Application\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Collins Pamba",
+            "email": "collinspamba@outlook.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=8.4",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "laminas/laminas-config-aggregator": "^1.19",
+        "marshal/contentmanager": "0.0.3",
+        "marshal/eventmanager": "0.0.2",
+        "marshal/platform": "^0.0.1",
+        "marshal/server": "^0.0.1",
+        "mezzio/mezzio-fastroute": "^3.14",
+        "mezzio/mezzio-helpers": "^5.20",
+        "twig/twig": "^3.22"
+    }
+}

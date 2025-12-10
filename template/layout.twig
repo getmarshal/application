@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}MySchema{% endblock %}</title>
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/css/styles.css" rel="stylesheet">
+        <link href="/static/css/football.css" rel="stylesheet">
+        <script src="/static/js/htmx.min.js"></script>
+        <script src="/static/js/idiomorph.min.js"></script>
+        <script src="/static/js/idiomorph-ext.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body data-hx-boost="true" hx-ext="morph">
+        {% block body %}
+        <main>
+            <section style="text-align:center;">
+                <h1>Search</h1>
+                <form action="" method="post">
+                    <input type="text" name="search" placeholder="Search content" required>
+                </form>
+            </section>
+            <section>
+                <a href="/content/football">Football</a>
+            </section>
+        </main>
+        {% endblock %}
+    </body>
+</html>
