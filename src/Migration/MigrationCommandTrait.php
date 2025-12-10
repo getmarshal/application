@@ -5,7 +5,7 @@ declare(strict_types= 1);
 namespace Marshal\Application\Migration;
 
 use Doctrine\DBAL\Schema\Schema;
-use Marshal\Utils\Database\Schema\Type;
+use Marshal\ContentManager\Schema\Type;
 
 trait MigrationCommandTrait
 {

@@ -7,7 +7,7 @@ namespace Marshal\Application\Migration;
 use Doctrine\DBAL\Schema\SchemaDiff;
 use Marshal\Utils\Database\DatabaseAwareInterface;
 use Marshal\Utils\Database\DatabaseAwareTrait;
-use Marshal\Utils\Database\Schema\SchemaManager;
+use Marshal\ContentManager\Schema\SchemaManager;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
