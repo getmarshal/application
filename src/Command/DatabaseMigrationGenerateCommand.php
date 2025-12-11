@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Marshal\Application\Migration;
+namespace Marshal\Application\Command;
 
 use Doctrine\DBAL\Schema\SchemaDiff;
-use Marshal\Utils\Database\DatabaseAwareInterface;
-use Marshal\Utils\Database\DatabaseAwareTrait;
+use Marshal\Utils\Database\ConnectionManager;
 use Marshal\ContentManager\Schema\SchemaManager;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -15,10 +14,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class MigrationGenerateCommand extends Command implements DatabaseAwareInterface
+class DatabaseMigrationGenerateCommand extends Command
 {
-    use DatabaseAwareTrait;
-    use MigrationCommandTrait;
+    use DatabaseMigrationCommandTrait;
 
     public function __construct(protected ContainerInterface $container, string $name)
     {
@@ -54,7 +52,7 @@ class MigrationGenerateCommand extends Command implements DatabaseAwareInterface
         }
 
         // print statements
-        $connection = $this->getDatabaseConnection($database);
+        $connection = ConnectionManager::getConnection($database);
         $statements = $connection->getDatabasePlatform()->getAlterSchemaSQL($diff);
         $io->info("This migration will generate the following statements:");
         $io->info($statements);
@@ -74,7 +72,7 @@ class MigrationGenerateCommand extends Command implements DatabaseAwareInterface
         $normalizedName = $this->normalizeMigrationName($name);
 
         // save migration
-        $queryBuilder = $this->getDatabaseConnection()->createQueryBuilder();
+        $queryBuilder = ConnectionManager::getConnection()->createQueryBuilder();
         $save = $queryBuilder->insert('migration')
             ->setValue('name', $queryBuilder->createNamedParameter($normalizedName))
             ->setValue('db', $queryBuilder->createNamedParameter($database))
@@ -108,7 +106,7 @@ class MigrationGenerateCommand extends Command implements DatabaseAwareInterface
         }
 
         // generate the schema diff
-        $dbalSchema = $this->getDatabaseConnection($database)->createSchemaManager();
+        $dbalSchema = ConnectionManager::getConnection($database)->createSchemaManager();
         $fromSchema = $dbalSchema->introspectSchema();
         $toSchema = $this->buildContentSchema($definitions);
         return $dbalSchema->createComparator()->compareSchemas($fromSchema, $toSchema);

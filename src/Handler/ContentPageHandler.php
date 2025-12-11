@@ -72,17 +72,17 @@ final class ContentPageHandler implements EventDispatcherAwareInterface, Request
             return null;
         }
 
-        foreach ($this->contentManager->getAll() as $content) {
-            if (! $content->getType()->hasRoutePrefix()) {
-                continue;
-            }
+        // foreach ($this->contentManager->getAll() as $content) {
+        //     if (! $content->getType()->hasRoutePrefix()) {
+        //         continue;
+        //     }
 
-            if ($content->getType()->getRoutePrefix() !== $schema) {
-                continue;
-            }
+        //     if ($content->getType()->getRoutePrefix() !== $schema) {
+        //         continue;
+        //     }
 
-            return $content;
-        }
+        //     return $content;
+        // }
 
         return null;
     }

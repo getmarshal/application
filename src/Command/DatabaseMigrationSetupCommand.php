@@ -2,22 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Marshal\Application\Migration;
+namespace Marshal\Application\Command;
 
-use Marshal\Utils\Database\DatabaseAwareInterface;
-use Marshal\Utils\Database\DatabaseAwareTrait;
 use Marshal\ContentManager\Schema\SchemaManager;
 use Marshal\ContentManager\Schema\Type;
+use Marshal\Utils\Database\ConnectionManager;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class MigrationSetupCommand extends Command implements DatabaseAwareInterface
+final class DatabaseMigrationSetupCommand extends Command
 {
-    use DatabaseAwareTrait;
-    use MigrationCommandTrait;
+    use DatabaseMigrationCommandTrait;
 
     public function __construct(protected ContainerInterface $container, string $name)
     {
@@ -35,7 +33,7 @@ final class MigrationSetupCommand extends Command implements DatabaseAwareInterf
         $io->info("Setting up migrations...");
 
         try {
-            $connection = $this->getDatabaseConnection();
+            $connection = ConnectionManager::getConnection();
         } catch (\Throwable $e) {
             $io->error("Error connecting to database");
             $io->error($e->getMessage());

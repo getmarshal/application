@@ -2,12 +2,12 @@
 
 declare(strict_types= 1);
 
-namespace Marshal\Application\Migration;
+namespace Marshal\Application\Command;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 
-final class MigrationCommandFactory
+final class DatabaseMigrationCommandFactory
 {
     public function __invoke(ContainerInterface $container, $requestedName): object
     {

@@ -2,12 +2,12 @@
 
 declare(strict_types= 1);
 
-namespace Marshal\Application\Migration;
+namespace Marshal\Application\Command;
 
 use Doctrine\DBAL\Schema\Schema;
 use Marshal\ContentManager\Schema\Type;
 
-trait MigrationCommandTrait
+trait DatabaseMigrationCommandTrait
 {
     private function buildContentSchema(array $definition): Schema
     {

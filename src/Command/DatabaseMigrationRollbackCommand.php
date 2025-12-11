@@ -2,11 +2,10 @@
 
 declare(strict_types= 1);
 
-namespace Marshal\Application\Migration;
+namespace Marshal\Application\Command;
 
 use Doctrine\DBAL\Schema\SchemaDiff;
-use Marshal\Utils\Database\DatabaseAwareInterface;
-use Marshal\Utils\Database\DatabaseAwareTrait;
+use Marshal\Utils\Database\ConnectionManager;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,10 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class MigrationRollBackCommand extends Command implements DatabaseAwareInterface
+final class DatabaseMigrationRollbackCommand extends Command
 {
-    use DatabaseAwareTrait;
-    use MigrationCommandTrait;
+    use DatabaseMigrationCommandTrait;
 
     public function __construct(protected ContainerInterface $container, string $name)
     {
@@ -39,7 +37,7 @@ final class MigrationRollBackCommand extends Command implements DatabaseAwareInt
 
         // get details
         $name = $input->getOption('name');
-        $connection = $this->getDatabaseConnection();
+        $connection = ConnectionManager::getConnection();
         $queryBuilder = $connection->createQueryBuilder();
         $migration = $queryBuilder
             ->select('m.*')
